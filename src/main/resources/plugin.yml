@@ -1,0 +1,22 @@
+name: AmongUsV2
+version: ${project.version}
+main: io.github.nolanwinter.amongusv2.AmongUsV2
+api-version: 1.16
+prefix: AmongUs
+load: STARTUP
+depend: [LuckPerms]
+softdepend: [UltraCustomizer]
+authors: [NWasHere]
+
+commands:
+  addplayer:
+    description: Adds a player to the game
+    usage: /addplayer <player>
+
+  removeplayer:
+    description: Removes a player from the game
+    usage: /removeplayer <player>
+
+  setskin:
+    description: desc
+    usage: /setskin <player> <skin>
