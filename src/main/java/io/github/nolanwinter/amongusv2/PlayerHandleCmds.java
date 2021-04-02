@@ -5,14 +5,17 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.inventivetalent.mcwrapper.auth.GameProfileWrapper;
+import org.inventivetalent.nicknamer.api.NickManager;
 import org.inventivetalent.nicknamer.api.NickNamerAPI;
+import org.inventivetalent.nicknamer.api.SkinLoader;
 
 import java.util.Collection;
 
 public class PlayerHandleCmds implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(command.getName() == "addplayer") {
+        if(command.getName().equals("addplayer")) {
             if(args.length > 0 ) {
                 Collection<Player> oPl = (Collection<Player>) Bukkit.getOnlinePlayers();
                 for (Player p : oPl) {
@@ -22,7 +25,7 @@ public class PlayerHandleCmds implements CommandExecutor {
                     }
                 }
             }
-        } else if(command.getName() == "removeplayer") {
+        } else if(command.getName().equals("removeplayer")) {
             if(args.length > 0 ) {
                 Collection<Player> oPl = (Collection<Player>) Bukkit.getOnlinePlayers();
                 for (Player p : oPl) {
@@ -32,7 +35,7 @@ public class PlayerHandleCmds implements CommandExecutor {
                     }
                 }
             }
-        } else if(command.getName() == "setname") {
+        } else if(command.getName().equals("setname")) {
             if(args.length > 0 ) {
                 Collection<Player> oPl = (Collection<Player>) Bukkit.getOnlinePlayers();
                 for (Player p : oPl) {
@@ -48,16 +51,24 @@ public class PlayerHandleCmds implements CommandExecutor {
                     }
                 }
             }
-        } else if(command.getName() == "setskin") {
+        } else if(command.getLabel().equals("setskin")) {
             if(args.length > 1 ) {
                 Collection<Player> oPl = (Collection<Player>) Bukkit.getOnlinePlayers();
                 for (Player p : oPl) {
                     if (p.getName().equals(args[0])) {
-                        String skin = "2056214450";
-                        NickNamerAPI.getNickManager().setCustomSkin(p.getUniqueId(), skin);
+                        String skin = "EaveBeats";
+                        sender.sendMessage(p.getDisplayName());
+                        sender.sendMessage(p.getUniqueId().toString());
+                        GameProfileWrapper cusSkin = SkinLoader.getSkinProfile(skin);
+                        NickNamerAPI.getNickManager().loadCustomSkin("testS", cusSkin);
+                        NickNamerAPI.getNickManager().setCustomSkin(p.getUniqueId(), "testS");
                         return true;
+                    } else {
+                        sender.sendMessage("Not Online");
                     }
                 }
+            } else {
+                sender.sendMessage("more args plz");
             }
         }
         return false;
